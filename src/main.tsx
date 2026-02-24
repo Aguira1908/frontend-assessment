@@ -1,7 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import FilterPages, { regionLoader } from './Pages/FilterPages';
+import FilterPages, {
+  regionLoader,
+  RegionErrorBoundary,
+} from './Pages/FilterPages';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -9,6 +12,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <FilterPages />,
     loader: regionLoader,
+    errorElement: <RegionErrorBoundary />,
   },
 ]);
 

@@ -1,4 +1,8 @@
-import { useLoaderData, useSearchParams } from 'react-router-dom';
+import {
+  useLoaderData,
+  useSearchParams,
+  useRouteError,
+} from 'react-router-dom';
 import type { ReactNode } from 'react';
 
 // Types
@@ -476,6 +480,65 @@ export default function FilterPages() {
           )}
         </div>
       </main>
+    </div>
+  );
+}
+
+// Error Boundary
+export function RegionErrorBoundary() {
+  const error = useRouteError();
+  const message =
+    error instanceof Error
+      ? error.message
+      : 'Terjadi kesalahan yang tidak diketahui.';
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-main-bg font-sans">
+      <div className="text-center max-w-md px-6">
+        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-red-100 flex items-center justify-center">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#ef4444"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        </div>
+        <h1 className="text-2xl font-bold text-navy mb-2">Gagal Memuat Data</h1>
+        <p className="text-navy/60 mb-2">
+          Maaf, data wilayah tidak dapat dimuat saat ini. Silakan coba lagi.
+        </p>
+        <p className="text-sm text-navy/40 mb-6 font-mono">{message}</p>
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="inline-flex items-center gap-2 py-2.5 px-6 bg-accent text-white rounded-xl font-medium hover:bg-accent/90 transition-all cursor-pointer"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="23 4 23 10 17 10" />
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+          </svg>
+          Coba Lagi
+        </button>
+      </div>
     </div>
   );
 }
